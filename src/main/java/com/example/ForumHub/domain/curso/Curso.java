@@ -20,9 +20,6 @@ public class Curso {
 
     private String nome;
 
-    @ManyToOne
-    private Topico topico;
-
     @Enumerated(EnumType.STRING)
     private CategoriaCurso categoriaCurso;
 }
