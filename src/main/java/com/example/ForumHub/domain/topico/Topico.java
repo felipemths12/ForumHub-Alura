@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "Usuario")
+@Entity(name = "Topico")
 @Table(name = "topicos")
 @Getter
 @NoArgsConstructor
@@ -40,6 +40,5 @@ public class Topico {
     private Curso curso;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "resposta_id")
     private List <Resposta> respostas;
 }
