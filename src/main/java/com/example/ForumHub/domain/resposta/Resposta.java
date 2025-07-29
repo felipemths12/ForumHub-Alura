@@ -1,5 +1,7 @@
 package com.example.ForumHub.domain.resposta;
 
+import com.example.ForumHub.domain.topico.Topico;
+import com.example.ForumHub.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,4 +18,16 @@ public class Resposta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String mensagem;
+
+    @ManyToOne
+    @JoinColumn(name = "topico_id")
+    private Topico topico;
+
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private Usuario autor;
+
 }

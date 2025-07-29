@@ -33,11 +33,13 @@ public class Topico {
     private StatusTopico status;
 
     @ManyToOne
+    @JoinColumn(name = "autor_id")
     private Usuario autor;
 
     @ManyToOne
     private Curso curso;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "resposta_id")
     private List <Resposta> respostas;
 }
