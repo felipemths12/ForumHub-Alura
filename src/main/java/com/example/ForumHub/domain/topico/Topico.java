@@ -4,6 +4,7 @@ package com.example.ForumHub.domain.topico;
 import com.example.ForumHub.domain.curso.Curso;
 import com.example.ForumHub.domain.resposta.Resposta;
 import com.example.ForumHub.domain.usuario.Usuario;
+import com.example.ForumHub.dto.DadosAtualizacaoTopico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -40,5 +41,14 @@ public class Topico {
     private Curso curso;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List <Resposta> respostas;
+    private List<Resposta> respostas;
+
+    public void atualizarInformacoes(DadosAtualizacaoTopico dados) {
+        if (dados.titulo() != null && !dados.titulo().isEmpty()) {
+            this.titulo = dados.titulo();
+        }
+        if (dados.mensagem() != null && !dados.mensagem().isEmpty()) {
+            this.mensagem = dados.mensagem();
+        }
+    }
 }

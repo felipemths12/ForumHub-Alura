@@ -1,5 +1,6 @@
 package com.example.ForumHub.controller;
 
+import com.example.ForumHub.dto.DadosAtualizacaoTopico;
 import com.example.ForumHub.dto.DadosCadastroTopico;
 import com.example.ForumHub.dto.DadosDetalhamentoTopico;
 import com.example.ForumHub.repository.TopicoRepository;
@@ -54,6 +55,24 @@ public class TopicoController {
         return ResponseEntity.notFound().build();
     }
 
+    public ResponseEntity<DadosDetalhamentoTopico> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoTopico dados) {
+        var topicoAtualizado = topicoService.atualizarTopico(id, dados);
 
+        var dadosDetalhamento = new DadosDetalhamentoTopico(topicoAtualizado);
+
+        // 3. Retorna 200 OK com os dados atualizados
+        return ResponseEntity.ok(dadosDetalhamento);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        if (topicoRepository.existsById(id)) {
+            topicoRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 }
 

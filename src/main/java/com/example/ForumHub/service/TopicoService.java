@@ -4,6 +4,7 @@ import com.example.ForumHub.domain.curso.Curso;
 import com.example.ForumHub.domain.topico.StatusTopico;
 import com.example.ForumHub.domain.topico.Topico;
 import com.example.ForumHub.domain.usuario.Usuario;
+import com.example.ForumHub.dto.DadosAtualizacaoTopico;
 import com.example.ForumHub.dto.DadosCadastroTopico;
 import com.example.ForumHub.repository.CursoRepository;
 import com.example.ForumHub.repository.TopicoRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class TopicoService {
@@ -49,5 +51,19 @@ public class TopicoService {
         );
 
         return topicoRepository.save(novoTopico);
+    }
+
+    public Topico atualizarTopico(Long id, DadosAtualizacaoTopico dados) {
+        var topico = topicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tópico não encontrado com o ID: " + id));
+
+        Optional<Topico> topicoDuplicado = topicoRepository.findByTituloAndMensagem(dados.titulo(), dados.mensagem());
+        if (topicoDuplicado.isPresent() && !topicoDuplicado.get().getId().equals(id)) {
+            throw new IllegalArgumentException("Já existe um tópico com este título e mensagem.");
+        }
+
+        topico.atualizarInformacoes(dados);
+
+        return topico;
     }
 }
