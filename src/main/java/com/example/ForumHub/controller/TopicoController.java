@@ -55,6 +55,8 @@ public class TopicoController {
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<DadosDetalhamentoTopico> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoTopico dados) {
         var topicoAtualizado = topicoService.atualizarTopico(id, dados);
 
